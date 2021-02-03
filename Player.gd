@@ -5,6 +5,7 @@ signal hit
 export var speed = 400
 var screen_size 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -14,6 +15,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var velocity = Vector2()
+# up, down, left, right arrow movement keys
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("ui_left"):
@@ -21,6 +23,15 @@ func _process(delta):
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += 1
 	if Input.is_action_pressed("ui_up"):
+		velocity.y -= 1
+# WASD movement keys
+	if Input.is_action_pressed("Right"):
+		velocity.x += 1
+	if Input.is_action_pressed("Left"):
+		velocity.x -= 1
+	if Input.is_action_pressed("Down"):
+		velocity.y += 1
+	if Input.is_action_pressed("Up"):
 		velocity.y -= 1
 		
 	if velocity.length() > 0:
@@ -41,7 +52,6 @@ func _process(delta):
 	elif velocity.y != 0:
 		$AnimatedSprite.animation = 'up'
 		$AnimatedSprite.flip_v = velocity.y > 0
-
 
 func _on_Player_body_entered(body):
 	hide()

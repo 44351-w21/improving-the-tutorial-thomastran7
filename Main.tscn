@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -6,8 +6,24 @@
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://dodge_assets/art/House In a Forest Loop.ogg" type="AudioStream" id=5]
 [ext_resource path="res://dodge_assets/art/gameover.wav" type="AudioStream" id=6]
+[ext_resource path="res://dodge_assets/bg1.png" type="Texture" id=7]
+[ext_resource path="res://ScrollingBG.gd" type="Script" id=8]
 
-[sub_resource type="Curve2D" id=1]
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform float scroll_speed;
+void fragment(){
+	vec2 shifteduv = UV;
+	shifteduv.x += TIME * scroll_speed;
+	vec4 color = texture(TEXTURE,shifteduv);
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/scroll_speed = null
+
+[sub_resource type="Curve2D" id=3]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0 )
 }
@@ -16,10 +32,13 @@ _data = {
 script = ExtResource( 1 )
 Mob = ExtResource( 3 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.211765, 0.772549, 0.721569, 1 )
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource( 2 )
+margin_right = 744.0
+margin_bottom = 1080.0
+texture = ExtResource( 7 )
+stretch_mode = 2
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -39,7 +58,7 @@ one_shot = true
 position = Vector2( 240, 450 )
 
 [node name="MobPath" type="Path2D" parent="."]
-curve = SubResource( 1 )
+curve = SubResource( 3 )
 
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
 

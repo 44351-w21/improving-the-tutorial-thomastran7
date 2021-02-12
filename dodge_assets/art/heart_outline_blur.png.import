@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/heart_outline_blur.png-a31f360b33af9ac4488d4aeb3701340a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://dodge_assets/art/heart_outline_blur.png"
+dest_files=[ "res://.import/heart_outline_blur.png-a31f360b33af9ac4488d4aeb3701340a.stex" ]
 
 [params]
 

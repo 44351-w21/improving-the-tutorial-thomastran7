@@ -4,13 +4,14 @@ signal hit
 
 export var speed = 400
 var screen_size 
-
+onready var stats = Stats
+onready var hurtbox  = $Hurtbox
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	stats.connect("no_health", self, "queue_free")
 	screen_size = get_viewport_rect().size
 	hide()
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -56,13 +57,21 @@ func _process(delta):
 		$AnimatedSprite.animation = 'up'
 		$AnimatedSprite.flip_v = velocity.y > 0
 
-func _on_Player_body_entered(body):
+#func _on_Player_body_entered(body):
+	#hide()
+	#emit_signal('hit')
+	#$CollisionShape2D.set_deferred("disabled", true)
+	
+func _on_Hurtbox_area_entered(area):
+	stats.health -= area.damage
+	print(stats.health)
+
+func _on_Stats_no_health():	
 	hide()
-	emit_signal('hit')
+	#emit_signal("hit")
 	$CollisionShape2D.set_deferred("disabled", true)
 	
 func start(pos):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
-	

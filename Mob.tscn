@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://dodge_assets/art/tank_explosion4.png" type="Texture" id=1]
 [ext_resource path="res://dodge_assets/art/enemyWalking_1.png" type="Texture" id=2]
 [ext_resource path="res://dodge_assets/art/enemySwimming_2.png" type="Texture" id=3]
 [ext_resource path="res://dodge_assets/art/enemyWalking_2.png" type="Texture" id=4]
 [ext_resource path="res://dodge_assets/art/enemySwimming_1.png" type="Texture" id=5]
+[ext_resource path="res://Hitbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Mob.gd" type="Script" id=7]
 [ext_resource path="res://dodge_assets/art/tank_explosion3.png" type="Texture" id=9]
 
@@ -23,15 +24,20 @@ animations = [ {
 "frames": [ ExtResource( 9 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "Firebomb",
-"speed": 3.0
+"speed": 4.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 36.556
-height = 27.3028
+height = 0.0339737
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 37.7245
+height = 8.2608
 
 [node name="Mob" type="RigidBody2D"]
 position = Vector2( -0.235962, 0 )
+collision_layer = 16
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource( 7 )
@@ -44,7 +50,7 @@ __meta__ = {
 ]]
 scale = Vector2( 0.75, 0.75 )
 frames = SubResource( 1 )
-animation = "Firebomb"
+animation = "swim"
 frame = 1
 playing = true
 
@@ -53,4 +59,14 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[node name="Hitbox" parent="." instance=ExtResource( 6 )]
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( -0.236, 0 )
+rotation = 1.5708
+shape = SubResource( 3 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+[editable path="Hitbox"]
